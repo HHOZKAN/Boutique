@@ -1,13 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from '../components/Home';
-import Login from '../components/Login';
-import CreateAccountPage from '../components/CreateAccount';
-import ProfilePage from '../components/ProfilPage';
-import PrivateRoute from '../components/PrivateRoute'; // Assurez-vous que le chemin d'importation est correct
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { restoreUser } from '../features/userSlice';
-import Cours from '../components/Cours';
+import Home from '../components/Home/Home';
+import Login from '../components/Login/Login';
 
 
 function App() {
@@ -23,10 +19,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cours" element={<Cours />} />
-        <Route path="/register" element={<CreateAccountPage />} />
-        <Route path="/profil" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+        <Route path="/login" element={<Login />} /> {/* Nouvelle route ajoutée */}
       </Routes>
     </BrowserRouter>
   );
