@@ -1,16 +1,25 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../features/userSlice';
+import { useNavigate } from 'react-router-dom';
 
-class Home extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1 className="text-3xl font-bold underline">
-                    Hello world!
-                </h1>
+function Home() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-            </div>
-        );
-    }
+    const handleLogout = () => {
+        dispatch(logoutUser());
+        navigate('/login');
+    };
+
+    return (
+        <div>
+            <h1 className="text-3xl font-bold underline">
+                Hello world!
+            </h1>
+            <button onClick={handleLogout}>Logout</button>
+        </div>
+    );
 }
 
 export default Home;
