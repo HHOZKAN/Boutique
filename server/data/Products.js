@@ -1,4 +1,4 @@
-const Products = [
+const products = [
     { 
         name : 'Le démon en nous',
         image : '/images/1.jpg',
@@ -29,4 +29,4 @@ const Products = [
     },
 ]
 
-export default Products;
+export default products;

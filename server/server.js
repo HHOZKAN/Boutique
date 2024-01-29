@@ -4,9 +4,9 @@ import Products from './data/Products.js';
 import dotenv from 'dotenv';
 import connectDatabase from './config/MongoDb.js';
 import ImportData from './DataImport.js';
-import coursRoute from './Routes/CoursRoutes.js';
 import { errorHandler, notFound } from './Middleware/Error.js';
 import userRoute from './Routes/UserRoutes.js';
+import productRoute from './Routes/ProductRoutes.js';
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ app.use(cors());
 
 // API
 app.use('/api/import', ImportData);
-app.use("/api/Products", coursRoute);
+app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
 
 // ERROR HANDLER MIDDLEWARES
