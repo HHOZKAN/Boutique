@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import cours from './data/Cours.js';
+import Products from './data/Products.js';
 import dotenv from 'dotenv';
 import connectDatabase from './config/MongoDb.js';
 import ImportData from './DataImport.js';
@@ -19,7 +19,7 @@ app.use(cors());
 
 // API
 app.use('/api/import', ImportData);
-app.use("/api/cours", coursRoute);
+app.use("/api/Products", coursRoute);
 app.use("/api/users", userRoute);
 
 // ERROR HANDLER MIDDLEWARES

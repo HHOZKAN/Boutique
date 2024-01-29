@@ -1,6 +1,6 @@
 import express from 'express';
 import asyncsHandler from 'express-async-handler';
-import cours from '../Models/CoursesModel.js';
+import cours from '../Models/ProductModel.js';
 
 const coursRoute = express.Router();
 
@@ -12,7 +12,7 @@ coursRoute.get('/', asyncsHandler(async (req, res) => {
 
 // GET COURSE BY ID
 coursRoute.get('/:id', asyncsHandler(async (req, res) => {
-    const courses = await cours.findById(req.params.id);
+    const product = await cours.findById(req.params.id);
     if (courses) {
         res.json(courses);
     } else {

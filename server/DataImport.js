@@ -1,8 +1,8 @@
 import express from 'express';
 import User from './models/UserModel.js';
 import users from './data/users.js';
-import Course from './Models/CoursesModel.js';
-import cours from './data/Cours.js';
+import Course from './Models/ProductModel.js';
+import Products from './data/Products.js';
 import asyncHandler from 'express-async-handler';
 
 const ImportData = express.Router();
@@ -15,11 +15,11 @@ ImportData.post('/user', asyncHandler (
     }
 ));
 
-ImportData.post('/cours', asyncHandler (
+ImportData.post('/Products', asyncHandler (
     async (req, res) => {
-        await Course.deleteMany({})
-        const importCours = await Course.insertMany(cours)
-        res.send({ importCours })
+        await Products.deleteMany({})
+        const importProducts = await Products.insertMany(Products)
+        res.send({ importProducts })
     }
 ));
 
