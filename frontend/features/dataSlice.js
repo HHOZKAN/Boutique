@@ -4,8 +4,10 @@ import axios from 'axios'
 
 export const fetchData = createAsyncThunk('data/fetchData', async () => {
   const response = await axios.get('http://localhost:5000/api/products')
+  console.log(response.data); // Ajoutez cette ligne
   return response.data
 })
+
 
 const dataSlice = createSlice({
   name: 'data',
