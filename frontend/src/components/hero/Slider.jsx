@@ -8,7 +8,7 @@ export const Slider = () => {
         <>
             <div className="slider">
                 <div className="container grid">
-                    {slide.map((product, i) => (
+                    {Slider.map((product, i) => (
                        <div className="box" key={i}>
                         <div className="img">
                           <img src={product.image} alt="" />  
