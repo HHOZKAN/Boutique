@@ -2,16 +2,17 @@ import React from "react";
 import "./slider.css";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import { slide } from "../../assets/data/data";
 
 export const Slider = () => {
     return (
         <>
             <div className="slider">
                 <div className="container grid">
-                    {Slider.map((product, i) => (
+                    {slide.map((item, i) => (
                        <div className="box" key={i}>
                         <div className="img">
-                          <img src={product.image} alt="" />  
+                          <img src={item.image} alt="" />  
                         </div>
                        </div> 
                     ) )}
