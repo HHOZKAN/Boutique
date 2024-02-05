@@ -32,22 +32,22 @@ export const order = [
     {
       id: 1,
       title: "Philosophie",
-      cover: "../images/category/ca1.jpg",
+      cover: "/images/category/ca1.jpg",
     },
     {
       id: 2,
       title: "Astronomie",
-      cover: "../images/category/ca2.jpg",
+      cover: "/images/category/ca2.jpg",
     },
     {
       id: 3,
       title: "Romans",
-      cover: "../images/category/ca3.jpg",
+      cover: "/images/category/ca3.jpg",
     },
     {
       id: 4,
       title: "Science Fiction",
-      cover: "../images/category/ca4.jpg",
+      cover: "/images/category/ca4.jpg",
     },
     {
       id: 5,
@@ -62,7 +62,7 @@ export const order = [
     {
       id: 7,
       title: "Horreur",
-      cover: "../images/category/ca7.webp",
+      cover: "/images/category/ca7.webp",
     },
     {
       id: 8,
@@ -72,6 +72,6 @@ export const order = [
     {
       id: 9,
       title: "Drames",
-      cover: "../images/category/ca9.png",
+      cover: "/images/category/ca9.png",
     },
   ]

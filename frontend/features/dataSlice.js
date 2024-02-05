@@ -1,13 +1,17 @@
-// features/dataSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const fetchData = createAsyncThunk('data/fetchData', async () => {
   const response = await axios.get('http://localhost:5000/api/products')
-  console.log(response.data); // Ajoutez cette ligne
-  return response.data
-})
 
+// TOTALPRICE
+  const productsWithTotal = response.data.map(product => ({
+    ...product,
+    totalPrice: product.price * product.countInStock,
+  }));
+
+  return productsWithTotal;
+})
 
 const dataSlice = createSlice({
   name: 'data',

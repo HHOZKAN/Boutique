@@ -17,6 +17,8 @@ export const Card = () => {
         dispatch(fetchData());
     }, [dispatch]);
 
+    let total = products.slice(0, 2).reduce((sum, product) => sum + product.totalPrice, 0);
+
     return (
         <>
             <div className='card' onClick={() => setCardOpen(!cardOpen)}>
@@ -35,17 +37,17 @@ export const Card = () => {
                 {products.slice(0, 2).map((product) => (
                     <CartItems
                         id={product.id}
-                        cover={product.cover}
+                        cover={product.image}
                         name={product.name}
                         price={product.price}
-                        quantity={product.quantity}
+                        quantity={product.countInStock}
                         totalPrice={product.totalPrice} />
                 ))}
 
                 <div className='checkOut'>
                     <button>
-                        <span>Priceed To Checkout</span>
-                        <label htmlFor=''>$</label>
+                        <span>Proceed To Checkout</span>
+                        <label htmlFor=''>${total}</label>
                     </button>
                 </div>
             </div>

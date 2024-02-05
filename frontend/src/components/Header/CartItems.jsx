@@ -11,9 +11,9 @@ export const CartItems = ({ id, cover, name, price, quantity, totalPrice }) => {
 
         <>
             <div className="cardList" key={id}>
-                <div className="cartCortent">
+                <div className="cartContent">
                     <div className="img">
-                        <img src="{cover}" alt="" />
+                        <img src={cover} alt="" />
                         <button className="remove flexCenter">
                             <AiOutlineClose />
                         </button>
