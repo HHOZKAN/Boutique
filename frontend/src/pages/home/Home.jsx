@@ -5,8 +5,9 @@ import { Slider } from '../../components/hero/Slider';
 import { Order } from '../../components/hero/Order';
 import { Category } from '../../components/Category/Category';
 import { Product } from '../../components/Products/Product.jsx';
+import { Footer } from '../../components/Footer/Footer.jsx';
 export const Home = () => {
-   
+
     return (
         <>
             <Slider />
