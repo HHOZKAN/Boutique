@@ -25,8 +25,8 @@ const cartSlice = createSlice({
           name: newItem.name,
           cover: newItem.cover,
         })
-        state.totalQuantity++
       }
+      state.totalQuantity++
     },
     removeFromCart(state, action) {
       const id = action.payload

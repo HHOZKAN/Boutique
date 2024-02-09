@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./login.css";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../../features/userSlice"; 
+import { loginUser } from "../../../features/userSlice";
+import { Link } from 'react-router-dom'; 
+
 
 export const Login = () => {
     const dispatch = useDispatch();
@@ -10,7 +12,7 @@ export const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(loginUser({ email, password })); 
+        dispatch(loginUser({ email, password }));
     };
 
     return (
@@ -31,6 +33,8 @@ export const Login = () => {
                         <span>Password * </span>
                         <input type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
                         <button className='button'>Log in </button>
+
+                        <Link to='/register'> Sing Up </Link>
                     </form>
                 </div>
             </section>

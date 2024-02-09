@@ -19,7 +19,7 @@ export const Product = () => {
       <section className='product'>
         <div className='container grid3'>
           {products.map((item) => (
-            <ProductCart key={item.id} id={item.id} cover={item.image} name={item.name} price={item.price} />
+            <ProductCart key={item._id} id={item._id} cover={item.image} name={item.name} price={item.price} />
           ))}
         </div>
       </section>

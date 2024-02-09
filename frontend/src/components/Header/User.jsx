@@ -4,6 +4,7 @@ import { BsBagCheck } from 'react-icons/bs';
 import { AiOutlineHeart } from "react-icons/ai";
 import { GrHelp } from "react-icons/gr";
 import { BiLogOut } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 export const User = () => {
     const user = true;
@@ -25,18 +26,22 @@ export const User = () => {
                         {profileOpen && (
                             <div className="openProfile boxItems" onClick={close}>
                                 <div className="image">
-                                    <div className="img">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="" />
-                                    </div>
+                                    <Link to="/Account">
+                                        <div className="img">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="" />
+                                        </div>
+                                    </Link>
                                     <div className="text">
                                         <h4>Eden Smith</h4>
                                         <label htmlFor=""> Paris, CA</label>
                                     </div>
                                 </div>
-                                <button className="box">
-                                    <IoSettingsOutline className="icon" />
-                                    <h4>My account</h4>
-                                </button>
+                                <Link to="/Account">
+                                    <button className="box">
+                                        <IoSettingsOutline className="icon" />
+                                        <h4>My account</h4>
+                                    </button>
+                                </Link>
                                 <button className="box">
                                     <BsBagCheck className="icon" />
                                     <h4>My Order</h4>

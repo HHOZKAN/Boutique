@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./login.css";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../features/userSlice";
+import { Link } from "react-router-dom";
 
 export const Register = () => {
     const dispatch = useDispatch();
@@ -41,6 +42,8 @@ export const Register = () => {
                         <span>Confirm Password * </span>
                         <input type='password' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                         <button className='button'>Register</button>
+                        <Link to='/login'>  Login </Link>
+
                     </form>
                 </div>
             </section>

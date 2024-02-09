@@ -18,12 +18,14 @@ export const Card = () => {
     }, [dispatch]);
 
     let total = products.slice(0, 2).reduce((sum, product) => sum + product.totalPrice, 0);
+    const cartItems = useSelector((state) => state.cart.itemsList);
+    const quantity = useSelector((state) => state.cart.totalQuantity);
 
     return (
         <>
             <div className='card' onClick={() => setCardOpen(!cardOpen)}>
                 <BiShoppingBag className='cardIcon' />
-                <span className='flexCenter'>2</span>
+                <span className='flexCenter'>{quantity}</span>
             </div>
             <div className={cardOpen ? "overlay" : "nonoverlay"}></div>
 
@@ -34,7 +36,7 @@ export const Card = () => {
                         <AiOutlineClose className='icon' />
                     </button>
                 </div>
-                {products.slice(0, 2).map((product) => (
+                {cartItems.map((product) => (
                     <CartItems
                         id={product.id}
                         cover={product.image}

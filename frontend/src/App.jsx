@@ -5,6 +5,7 @@ import { Home } from "./pages/home/Home";
 import { Footer } from "./components/Footer/Footer.jsx";
 import { Login } from "./pages/login/Login.jsx";
 import { Register } from "./pages/login/Register.jsx";
+import { Account } from "./pages/account/Account.jsx";
 
 // function App() {
 //   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ import { Register } from "./pages/login/Register.jsx";
 //       dispatch(restoreUser(token));
 //     }
 //   }, [dispatch]);
+
 function App() {
   return (
     <>
@@ -24,6 +26,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
         <Footer />
       </Router>
