@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import "./login.css";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../features/userSlice";
-import { Link } from 'react-router-dom'; 
-
+import { Link, useNavigate } from 'react-router-dom'; 
 
 export const Login = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser({ email, password }));
+        navigate('/'); // Redirige vers la page principale
     };
 
     return (

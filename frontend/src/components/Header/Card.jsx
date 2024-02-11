@@ -17,7 +17,11 @@ export const Card = () => {
         dispatch(fetchData());
     }, [dispatch]);
 
-    let total = products.slice(0, 2).reduce((sum, product) => sum + product.totalPrice, 0);
+    let total = 0
+    const itemsLists = useSelector((state) => state.cart.itemsList)
+    itemsLists.forEach((item) => {
+        total += item.totalPrice
+    })
     const cartItems = useSelector((state) => state.cart.itemsList);
     const quantity = useSelector((state) => state.cart.totalQuantity);
 
@@ -39,10 +43,10 @@ export const Card = () => {
                 {cartItems.map((product) => (
                     <CartItems
                         id={product.id}
-                        cover={product.image}
+                        cover={product.cover}
                         name={product.name}
                         price={product.price}
-                        quantity={product.countInStock}
+                        quantity={product.quantity}
                         totalPrice={product.totalPrice} />
                 ))}
 

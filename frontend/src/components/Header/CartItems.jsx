@@ -4,16 +4,26 @@ import { BsBagCheck } from 'react-icons/bs';
 import { AiOutlineClose, AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { GrHelp } from "react-icons/gr";
 import { BiLogOut } from "react-icons/bi";
+import { cartActions } from "../../../features/cartSlice"
+import { useDispatch } from "react-redux";
 
-export const CartItems = ({ id, cover, name, price, quantity, totalPrice }) => {
 
+export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
+    const dispatch = useDispatch();
+
+    const incCartItems = () => {
+        dispatch(cartActions.addToCart({id, name, price, cover}));
+    }
+    const descCartItems = () => {
+        dispatch(cartActions.removeFromCart(id));
+    }
     return (
 
         <>
             <div className="cardList" key={id}>
                 <div className="cartContent">
                     <div className="img">
-                        <img src={cover} alt="" />
+                        <img src={image} alt="" />
                         <button className="remove flexCenter">
                             <AiOutlineClose />
                         </button>
@@ -23,11 +33,11 @@ export const CartItems = ({ id, cover, name, price, quantity, totalPrice }) => {
                         <label htmlFor="">Unit Price $ {price}</label>
                         <div className="price">
                             <div className="qty flexCenter">
-                                <button className="plus">
+                                <button className="plus" onClick={incCartItems}>
                                     <AiOutlinePlus />
                                 </button>
                                 <button className="num">{quantity}</button>
-                                <button className="minus">
+                                <button className="minus" onClick={descCartItems}>
                                     <AiOutlineMinus />
                                 </button>
                             </div>

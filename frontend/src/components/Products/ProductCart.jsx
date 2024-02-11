@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux"
 import { cartActions } from "../../../features/cartSlice"
 
 export const ProductCart = ({ key, id, cover, name, price }) => {
+  
   const dispatch = useDispatch()
   const addToCart = () => {
     dispatch(cartActions.addToCart({ id, name, price, cover }))
