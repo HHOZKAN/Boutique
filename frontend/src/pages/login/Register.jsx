@@ -34,14 +34,14 @@ export const Register = () => {
 
                     <form onSubmit={handleSubmit}>
                         <span>Email address</span>
-                        <input type='text' required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input className="allinput" type='text' required value={email} onChange={(e) => setEmail(e.target.value)} />
                         <span>Username * </span>
-                        <input type='text' required value={name} onChange={(e) => setUsername(e.target.value)} />
+                        <input className="allinput" type='text' required value={name} onChange={(e) => setUsername(e.target.value)} />
                         <span>Password * </span>
-                        <input type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input className="allinput" type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
                         <span>Confirm Password * </span>
-                        <input type='password' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                        <button className='button'>Register</button>
+                        <input className="allinput" type='password' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <button className='button allbtn'>Register</button>
                         <Link to='/login'>  Login </Link>
 
                     </form>

@@ -30,10 +30,10 @@ export const Login = () => {
 
                     <form onSubmit={handleSubmit}>
                         <span>Username or Email address</span>
-                        <input type='text' required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input className="allinput" type='text' required value={email} onChange={(e) => setEmail(e.target.value)} />
                         <span>Password * </span>
-                        <input type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <button className='button'>Log in </button>
+                        <input className="allinput" type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <button className='button allbtn'>Log in </button>
 
                         <Link to='/register'> Sing Up </Link>
                     </form>

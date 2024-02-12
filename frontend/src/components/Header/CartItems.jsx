@@ -24,7 +24,7 @@ export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
                 <div className="cartContent">
                     <div className="img">
                         <img src={image} alt="" />
-                        <button className="remove flexCenter">
+                        <button className="remove flexCenter allbtn">
                             <AiOutlineClose />
                         </button>
                     </div>
@@ -33,11 +33,11 @@ export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
                         <label htmlFor="">Unit Price $ {price}</label>
                         <div className="price">
                             <div className="qty flexCenter">
-                                <button className="plus" onClick={incCartItems}>
+                                <button className="plus allbtn" onClick={incCartItems}>
                                     <AiOutlinePlus />
                                 </button>
-                                <button className="num">{quantity}</button>
-                                <button className="minus" onClick={descCartItems}>
+                                <button className="num allbtn">{quantity}</button>
+                                <button className="minus allbtn" onClick={descCartItems}>
                                     <AiOutlineMinus />
                                 </button>
                             </div>

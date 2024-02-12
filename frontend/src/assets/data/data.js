@@ -32,7 +32,7 @@ export const order = [
     {
       id: 1,
       title: "Philosophie",
-      cover: "/images/category/ca1.jpg",
+      cover: "./images/category/ca1.jpg",
     },
     {
       id: 2,
