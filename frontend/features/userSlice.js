@@ -62,7 +62,7 @@ const userSlice = createSlice({
             state.token = null;
         },
         restoreUser: (state, action) => {
-            state.isAuthenticated = true; 
+            state.isAuthenticated = true;
             state.token = action.payload;
         },
     },
@@ -84,15 +84,13 @@ const userSlice = createSlice({
             })
 
             .addCase(updateUserProfile.fulfilled, (state, action) => {
-                //* ETAT DE LUTILISATEUR POUR AFFICHER LE PROFIL
                 state.isAuthenticated = true;
-
-                state.user = action.payload;
+                state.user = { ...state.user, ...action.payload };
             })
     },
 
 });
 
-export const { logoutUser, restoreUser } = userSlice.actions; 
+export const { logoutUser, restoreUser } = userSlice.actions;
 
 export default userSlice.reducer;

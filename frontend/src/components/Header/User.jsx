@@ -32,7 +32,7 @@ export const User = () => {
             <div className="profile">
                 {user ? (
                     <>
-                        <button className="img" onClick={() => setProfileOpen(!profileOpen)}>
+                        <button className="img allbtn" onClick={() => setProfileOpen(!profileOpen)}>
                             <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="" />
                         </button>
 
@@ -49,46 +49,28 @@ export const User = () => {
                                         <label htmlFor=""> Paris, CA</label>
                                     </div>
                                 </div>
-                                {isAuthenticated ? (
-                                    <Link to="/Account">
-                                        <button className="box">
-                                            <IoSettingsOutline className="icon" />
-                                            <h4>My account</h4>
-                                        </button>
-                                    </Link>
-                                ) : (
-                                    <Link to="/register">
-                                        <button className="box">
-                                            <IoSettingsOutline className="icon" />
-                                            <h4>Register</h4>
-                                        </button>
-                                    </Link>
-                                )}
-                                <button className="box">
+                                <Link to="/Account">
+                                    <button className="box allbtn">
+                                        <IoSettingsOutline className="icon" />
+                                        <h4>My account</h4>
+                                    </button>
+                                </Link>
+                                <button className="box allbtn">
                                     <BsBagCheck className="icon" />
                                     <h4>My Order</h4>
                                 </button>
-                                <button className="box">
+                                <button className="box allbtn">
                                     <AiOutlineHeart className="icon" />
                                     <h4>WishList</h4>
                                 </button>
-                                <button className="box">
+                                <button className="box allbtn">
                                     <GrHelp className="icon" />
                                     <h4>Help</h4>
                                 </button>
-                                {isAuthenticated ? (
-                                    <button className="box" onClick={handleLogout}>
-                                        <BiLogOut className="icon" />
-                                        <h4>Log Out</h4>
-                                    </button>
-                                ) : (
-                                    <Link to="/Login">
-                                        <button className="box">
-                                            <BiLogOut className="icon" />
-                                            <h4>Log In</h4>
-                                        </button>
-                                    </Link>
-                                )}
+                                <button className="box allbtn">
+                                    <BiLogOut className="icon" />
+                                    <h4>Log Out</h4>
+                                </button>
                             </div>
                         )}
                     </>

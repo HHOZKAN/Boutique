@@ -8,6 +8,7 @@ import { Login } from "./pages/login/Login.jsx";
 import { Register } from "./pages/login/Register.jsx";
 import { Account } from "./pages/account/Account.jsx";
 import { restoreUser } from '/features/userSlice'; 
+import { Payment } from "./pages/payment/Payment.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
         <Footer />
       </Router>
