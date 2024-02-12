@@ -13,7 +13,7 @@ export const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser({ email, password }));
-        navigate('/'); // Redirige vers la page principale
+        navigate('/'); 
     };
 
     return (
@@ -24,7 +24,7 @@ export const Login = () => {
                         <img src="" alt='' />
                         <div className='text'>
                             <h3>Login</h3>
-                            <h1>My ACcount</h1>
+                            <h1>My Account</h1>
                         </div>
                     </div>
 
