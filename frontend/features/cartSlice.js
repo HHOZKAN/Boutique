@@ -5,6 +5,7 @@ const cartSlice = createSlice({
   initialState: {
     itemsList: [],
     totalQuantity: 0,
+    shippingAddress: JSON.parse(localStorage.getItem('shippingAddress')) || {},
   },
   reducers: {
     addToCart(state, action) {
@@ -38,6 +39,10 @@ const cartSlice = createSlice({
         exitstingItem.quantity--
         exitstingItem.totalPrice -= exitstingItem.price
       }
+    },
+    saveShippingAddress(state, action) {
+      state.shippingAddress = action.payload;
+      localStorage.setItem('shippingAddress', JSON.stringify(action.payload));
     },
   },
 })
