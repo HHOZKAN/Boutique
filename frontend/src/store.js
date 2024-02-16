@@ -1,9 +1,8 @@
-// app/store.js
 import { configureStore } from '@reduxjs/toolkit'
 import dataReducer from '../features/dataSlice'
 import userReducer from '../features/userSlice';
-import cartReducer from '../features/cartSlice' 
-
+import cartReducer from '../features/cartSlice'
+import { localStorageMiddleware } from './localStorageMiddleware';
 
 export default configureStore({
   reducer: {
@@ -11,4 +10,5 @@ export default configureStore({
     user: userReducer,
     cart: cartReducer,
   },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(localStorageMiddleware),
 })

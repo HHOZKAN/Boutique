@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { BsBagCheck } from 'react-icons/bs';
 import { AiOutlineClose, AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { GrHelp } from "react-icons/gr";
 import { BiLogOut } from "react-icons/bi";
 import { cartActions } from "../../../features/cartSlice"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
     const dispatch = useDispatch();
+
+    const cart = useSelector((state) => state.cart);
+
+    useEffect(() => {
+        if (cart.itemsList.length === 0) {
+          const localStorageCart = localStorage.getItem('cart');
+          if (localStorageCart) {
+            dispatch(cartActions.setCart(JSON.parse(localStorageCart)));
+          }
+        }
+      }, [dispatch, cart]);
+    
+      useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }, [cart]);
 
     const incCartItems = () => {
         dispatch(cartActions.addToCart({id, name, price, cover}));

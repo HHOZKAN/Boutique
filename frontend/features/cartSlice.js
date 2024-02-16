@@ -2,11 +2,12 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: {
+  initialState: JSON.parse(localStorage.getItem('cart')) || {
     itemsList: [],
     totalQuantity: 0,
     shippingAddress: JSON.parse(localStorage.getItem('shippingAddress')) || {},
   },
+
   reducers: {
     addToCart(state, action) {
       const newItem = action.payload
@@ -31,18 +32,25 @@ const cartSlice = createSlice({
     },
     removeFromCart(state, action) {
       const id = action.payload
-      const exitstingItem = state.itemsList.find((item) => item.id === id)
-      if (exitstingItem.quantity === 1) {
-        state.itemsList = state.itemsList.filter((item) => item.id !== id)
+      const existingItem = state.itemsList.find((item) => item.id === id)
+      if (existingItem) {
+        if (existingItem.quantity === 1) {
+          state.itemsList = state.itemsList.filter((item) => item.id !== id)
+        } else {
+          existingItem.quantity--
+          existingItem.totalPrice -= existingItem.price
+        }
         state.totalQuantity--
-      } else {
-        exitstingItem.quantity--
-        exitstingItem.totalPrice -= exitstingItem.price
       }
     },
     saveShippingAddress(state, action) {
       state.shippingAddress = action.payload;
       localStorage.setItem('shippingAddress', JSON.stringify(action.payload));
+    },
+    setCart: (state, action) => {
+      state.itemsList = action.payload.itemsList;
+      state.totalQuantity = action.payload.totalQuantity;
+      state.shippingAddress = action.payload.shippingAddress;
     },
   },
 })

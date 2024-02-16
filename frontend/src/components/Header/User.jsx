@@ -21,7 +21,7 @@ export const User = () => {
     }
     const handleLogout = () => {
         dispatch(logoutUser());
-        navigate('/'); 
+        navigate('/');
     }
 
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
@@ -30,7 +30,7 @@ export const User = () => {
 
         <>
             <div className="profile">
-                {user ? (
+                {isAuthenticated ? (
                     <>
                         <button className="img allbtn" onClick={() => setProfileOpen(!profileOpen)}>
                             <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="" />
@@ -67,14 +67,46 @@ export const User = () => {
                                     <GrHelp className="icon" />
                                     <h4>Help</h4>
                                 </button>
-                                <button className="box allbtn">
+                                <button className="box allbtn" onClick={handleLogout}>
                                     <BiLogOut className="icon" />
                                     <h4>Log Out</h4>
                                 </button>
                             </div>
                         )}
                     </>
-                ) : (<button>My account</button>)}
+                ) : (<>
+                    <button className="img allbtn" onClick={() => setProfileOpen(!profileOpen)}>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="" />
+                    </button>
+
+                    {profileOpen && (
+                        <div className="openProfile boxItems" onClick={close}>
+                            <div className="image">
+                                <Link to="/Account">
+                                    <div className="img">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="" />
+                                    </div>
+                                </Link>
+                                <div className="text">
+                                    <h4>Eden Smith</h4>
+                                    <label htmlFor=""> Paris, CA</label>
+                                </div>
+                            </div>
+                            <Link to="/Account">
+                                <button className="box allbtn">
+                                    <IoSettingsOutline className="icon" />
+                                    <h4>Créer un compte</h4>
+                                </button>
+                            </Link>
+                            <button className="box allbtn" onClick={handleLogout}>
+                                <BiLogOut className="icon" />
+                                <h4>Se connecter</h4>
+                            </button>
+                        </div>
+                    )}
+                </>
+
+                )}
             </div>
         </>
 
