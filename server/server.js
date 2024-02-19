@@ -7,6 +7,7 @@ import ImportData from './DataImport.js';
 import { errorHandler, notFound } from './Middleware/Error.js';
 import userRoute from './Routes/UserRoutes.js';
 import productRoute from './Routes/ProductRoutes.js';
+import orderRouter from './Routes/orderRoutes.js';
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.use(cors());
 app.use('/api/import', ImportData);
 app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
+app.use("/api/orders", orderRouter);
+
 
 // ERROR HANDLER MIDDLEWARES
 app.use(notFound);

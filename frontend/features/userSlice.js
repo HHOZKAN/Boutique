@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const loginUser = createAsyncThunk('user/login', async (userData, { rejectWithValue }) => {
     try {
-        const { data } = await axios.post('http://localhost:5000/api/users/login', userData);
+        const { data } = await axios.post('http://localhost:5050/api/users/login', userData);
         return data;
     } catch (err) {
         return rejectWithValue(err.response.data);
@@ -12,7 +12,7 @@ export const loginUser = createAsyncThunk('user/login', async (userData, { rejec
 
 export const registerUser = createAsyncThunk('user/register', async (userData, { rejectWithValue }) => {
     try {
-        const { data } = await axios.post('http://localhost:5000/api/users', userData);
+        const { data } = await axios.post('http://localhost:5050/api/users', userData);
         return data;
     } catch (err) {
         console.log(err.response.data);
@@ -28,6 +28,7 @@ export const getUserProfile = createAsyncThunk('user/profile', async (_, { rejec
                 Authorization: `Bearer ${user.token}`,
             },
         });
+        console.log('Data from API:', data); // Ajoutez ceci
         return data;
     } catch (err) {
         return rejectWithValue(err.response.data);
@@ -37,7 +38,7 @@ export const getUserProfile = createAsyncThunk('user/profile', async (_, { rejec
 export const updateUserProfile = createAsyncThunk('user/updateProfile', async (updatedUserData, { rejectWithValue, getState }) => {
     const { user } = getState();
     try {
-        const { data } = await axios.put('http://localhost:5000/api/users/profile', updatedUserData, {
+        const { data } = await axios.put('http://localhost:5050/api/users/profile', updatedUserData, {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             },
@@ -53,6 +54,8 @@ const userSlice = createSlice({
     initialState: {
         isAuthenticated: false,
         token: null,
+        user: null,
+
     },
     reducers: {
         logoutUser: (state) => {
@@ -80,7 +83,8 @@ const userSlice = createSlice({
                 state.token = action.payload.token;
             })
             .addCase(getUserProfile.fulfilled, (state, action) => {
-                return action.payload;
+                console.log('Updating user state with:', action.payload); // Ajoutez ceci
+                state.user = action.payload; 
             })
 
             .addCase(updateUserProfile.fulfilled, (state, action) => {
