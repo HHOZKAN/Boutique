@@ -15,7 +15,6 @@ export const registerUser = createAsyncThunk('user/register', async (userData, {
         const { data } = await axios.post('http://localhost:5050/api/users', userData);
         return data;
     } catch (err) {
-        console.log(err.response.data);
         return rejectWithValue(err.response.data);
     }
 });
@@ -28,7 +27,6 @@ export const getUserProfile = createAsyncThunk('user/profile', async (_, { rejec
                 Authorization: `Bearer ${user.token}`,
             },
         });
-        console.log('Data from API:', data); // Ajoutez ceci
         return data;
     } catch (err) {
         return rejectWithValue(err.response.data);

@@ -8,6 +8,7 @@ import { cartActions } from "../../../features/cartSlice"
 import { useDispatch, useSelector } from "react-redux";
 
 
+
 export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
     const dispatch = useDispatch();
 
@@ -15,19 +16,22 @@ export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
 
     useEffect(() => {
         if (cart.itemsList.length === 0) {
-          const localStorageCart = localStorage.getItem('cart');
-          if (localStorageCart) {
-            dispatch(cartActions.setCart(JSON.parse(localStorageCart)));
-          }
+            const localStorageCart = localStorage.getItem('cart');
+            if (localStorageCart) {
+                dispatch(cartActions.setCart(JSON.parse(localStorageCart)));
+            }
         }
-      }, [dispatch, cart]);
-    
-      useEffect(() => {
+    }, [dispatch, cart]);
+
+    useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
-      }, [cart]);
+    }, [cart]);
+
+
+
 
     const incCartItems = () => {
-        dispatch(cartActions.addToCart({id, name, price, cover}));
+        dispatch(cartActions.addToCart({ id, name, price, cover }));
     }
     const descCartItems = () => {
         dispatch(cartActions.removeFromCart(id));
@@ -39,9 +43,6 @@ export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
                 <div className="cartContent">
                     <div className="img">
                         <img src={image} alt="" />
-                        <button className="remove flexCenter allbtn">
-                            <AiOutlineClose />
-                        </button>
                     </div>
                     <div className="details">
                         <p> {name} </p>
@@ -56,11 +57,18 @@ export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
                                     <AiOutlineMinus />
                                 </button>
                             </div>
+
                             <div className="priceTitle">${totalPrice}</div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
+            <button onClick={() => dispatch(cartActions.resetCart())} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">  
+            Vider le panier
+            </button>
+              
         </>
 
     )

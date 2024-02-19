@@ -8,8 +8,9 @@ export const ProductCart = ({ key, id, cover, name, price }) => {
   
   const dispatch = useDispatch()
   const addToCart = () => {
-    dispatch(cartActions.addToCart({ id, name, price, cover }))
-  }
+    console.log({ id, name, price, cover }); 
+    dispatch(cartActions.addToCart({ id, name, price, cover }));
+  };
   return (
     <div className='box boxItems' id='product'>
       <div className='img'>

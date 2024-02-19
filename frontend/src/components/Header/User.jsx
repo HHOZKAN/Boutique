@@ -6,7 +6,9 @@ import { GrHelp } from "react-icons/gr";
 import { BiLogOut } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from '../../../features/cartSlice';
 import { logoutUser, getUserProfile } from "../../../features/userSlice";
+
 
 
 export const User = () => {
@@ -20,15 +22,18 @@ export const User = () => {
     }
     const handleLogout = () => {
         dispatch(logoutUser());
+      
+        dispatch(cartActions.resetCart());
+      
+        localStorage.removeItem('cart');
+      
         navigate('/');
-    }
+      };
 
     const token = useSelector(state => state.user.token);
 
-    console.log(token);
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const name = useSelector(state => state.user.user?.name);
-    console.log(name);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -36,7 +41,6 @@ export const User = () => {
         }
     }, [isAuthenticated, dispatch]);
 
-    // ...
 
     return (
 
@@ -58,30 +62,30 @@ export const User = () => {
                                     </Link>
                                     <div className="text">
                                         <h4>{name}</h4>
-                                        <label htmlFor=""> Paris, CA</label>
+                                        <label htmlFor=""> Omeiwa Mu Shindeiru</label>
                                     </div>
                                 </div>
                                 <Link to="/Account">
                                     <button className="box allbtn">
                                         <IoSettingsOutline className="icon" />
-                                        <h4>My account</h4>
+                                        <h4>Mon compte</h4>
                                     </button>
                                 </Link>
                                 <button className="box allbtn">
                                     <BsBagCheck className="icon" />
-                                    <h4>My Order</h4>
+                                    <h4>Ma commande </h4>
                                 </button>
                                 <button className="box allbtn">
                                     <AiOutlineHeart className="icon" />
-                                    <h4>WishList</h4>
+                                    <h4>Favoris</h4>
                                 </button>
                                 <button className="box allbtn">
                                     <GrHelp className="icon" />
-                                    <h4>Help</h4>
+                                    <h4>Aide</h4>
                                 </button>
                                 <button className="box allbtn" onClick={handleLogout}>
                                     <BiLogOut className="icon" />
-                                    <h4>Log Out</h4>
+                                    <h4>Se déconnecter</h4>
                                 </button>
                             </div>
                         )}
