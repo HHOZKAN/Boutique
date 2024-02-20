@@ -29,8 +29,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-          <Route path="/register" element={user ? <Navigate to="/" /> : <Register />} />
+          <Route path="/login" element={ <Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/card" element={<Payment />} />
