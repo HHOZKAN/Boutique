@@ -65,9 +65,7 @@ export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
                     </div>
                 </div>
             </div>
-            <button onClick={() => dispatch(cartActions.resetCart())} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">  
-            Vider le panier
-            </button>
+           
               
         </>
 

@@ -4,6 +4,8 @@ import { BiShoppingBag } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { CartItems } from "./CartItems";
 import { fetchData } from '../../../features/dataSlice';
+import { cartActions } from "../../../features/cartSlice"
+
 
 export const Card = () => {
     const [cardOpen, setCardOpen] = useState(false);
@@ -49,12 +51,15 @@ export const Card = () => {
                         quantity={product.quantity}
                         totalPrice={product.totalPrice} />
                 ))}
+                <button onClick={() => dispatch(cartActions.resetCart())} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Vider le panier
+                </button>
 
                 <div className='checkOut'>
                     <button className="allbtn">
                         <span>Procéder au paiement</span>
                         <label htmlFor=''>${total}</label>
-                        
+
                     </button>
                 </div>
             </div>

@@ -47,9 +47,10 @@ export const Payment = () => {
                             <div className="flex flex-col rounded-lg bg-white sm:flex-row" key={item.id}>
                                 <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src={item.image} alt={item.name} />
                                 <div className="flex w-full flex-col px-4 py-4">
-                                    <span className="font-semibold">{item.name}</span>
+                                    <span className="font-semibold">{item.name} x {item.quantity}</span>
                                     <span className="float-right text-gray-400">{item.size}</span>
-                                    <p className="text-lg font-bold">${item.price}</p>
+                                    <p className="">Prix unitaire {item.price} €</p>
+                                    <p className="text-lg font-bold">Prix total {item.totalPrice} €</p>
                                 </div>
                             </div>
                         ))}
@@ -98,8 +99,8 @@ export const Payment = () => {
 
                 <div className="mt-6 border-t border-b py-2">
                     <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-gray-900">Prix articles</p>
-                        <p className="font-semibold text-gray-900">$399.00</p>
+                        <p className="text-sm font-medium text-gray-900">Prix articles </p>
+                        <p className="font-semibold text-gray-900"> {cart.itemsList.price} </p>
                     </div>
                     <div className="flex items-center justify-between">
                         <p className="text-sm font-medium text-gray-900">Livraison</p>
