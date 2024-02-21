@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 
-export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
+export const CartItems = ({ id, cover, name, price, quantity, totalPrice }) => {
     const dispatch = useDispatch();
 
     const cart = useSelector((state) => state.cart);
@@ -42,11 +42,11 @@ export const CartItems = ({ id, image, name, price, quantity, totalPrice }) => {
             <div className="cardList" key={id}>
                 <div className="cartContent">
                     <div className="img">
-                        <img src={image} alt="" />
+                        <img src={cover} alt="HASAN" />
                     </div>
                     <div className="details">
                         <p> {name} </p>
-                        <label htmlFor="">Unit Price $ {price}</label>
+                        <label htmlFor="">Prix unitaire {price} €</label>
                         <div className="price">
                             <div className="qty flexCenter">
                                 <button className="plus allbtn" onClick={incCartItems}>

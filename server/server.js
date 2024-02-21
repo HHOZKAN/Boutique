@@ -23,6 +23,7 @@ app.use('/api/import', ImportData);
 app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
 app.use("/api/orders", orderRouter);
+// app.use("payment", PaymentRouteur);
 
 
 // ERROR HANDLER MIDDLEWARES

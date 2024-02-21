@@ -22,13 +22,13 @@ export const User = () => {
     }
     const handleLogout = () => {
         dispatch(logoutUser());
-      
+
         dispatch(cartActions.resetCart());
-      
+
         localStorage.removeItem('cart');
-      
+
         navigate('/');
-      };
+    };
 
     const token = useSelector(state => state.user.token);
 
@@ -71,18 +71,24 @@ export const User = () => {
                                         <h4>Mon compte</h4>
                                     </button>
                                 </Link>
-                                <button className="box allbtn">
-                                    <BsBagCheck className="icon" />
-                                    <h4>Ma commande </h4>
-                                </button>
+
+                                <Link to="/payment">
+                                    <button className="box allbtn">
+                                        <BsBagCheck className="icon" />
+                                        <h4>Ma commande </h4>
+                                    </button>
+                                </Link>
+
                                 <button className="box allbtn">
                                     <AiOutlineHeart className="icon" />
                                     <h4>Favoris</h4>
                                 </button>
+
                                 <button className="box allbtn">
                                     <GrHelp className="icon" />
                                     <h4>Aide</h4>
                                 </button>
+                                
                                 <button className="box allbtn" onClick={handleLogout}>
                                     <BiLogOut className="icon" />
                                     <h4>Se déconnecter</h4>

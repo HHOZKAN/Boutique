@@ -24,6 +24,7 @@ export const Card = () => {
     itemsLists.forEach((item) => {
         total += item.totalPrice
     })
+
     const cartItems = useSelector((state) => state.cart.itemsList);
     const quantity = useSelector((state) => state.cart.totalQuantity);
 
@@ -44,6 +45,7 @@ export const Card = () => {
                 </div>
                 {cartItems.map((product) => (
                     <CartItems
+                        key={product.id}
                         id={product.id}
                         cover={product.cover}
                         name={product.name}

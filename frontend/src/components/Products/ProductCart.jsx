@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { cartActions } from "../../../features/cartSlice"
 
-export const ProductCart = ({ key, id, cover, name, price }) => {
+export const ProductCart = ({ id, cover, name, price }) => {
   
   const dispatch = useDispatch()
   const addToCart = () => {

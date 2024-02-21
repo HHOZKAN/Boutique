@@ -7,7 +7,7 @@ export const submitOrder = createAsyncThunk('orders/submitOrder', async (orderDa
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${orderData.token}`, // Assure-toi de passer le token dans orderData
+                Authorization: `Bearer ${orderData.token}`, 
             },
         };
         const { data } = await axios.post('/api/orders', orderData, config);
