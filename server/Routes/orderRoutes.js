@@ -38,6 +38,7 @@ orderRouter.post('/pay', asyncHandler(async (req, res) => {
 
 orderRouter.post(
     '/',
+    protect,
     asyncHandler(async (req, res) => {
         const { orderItems, 
             shippingAddress, 
