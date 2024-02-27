@@ -81,7 +81,7 @@ const userSlice = createSlice({
                 state.token = action.payload.token;
             })
             .addCase(getUserProfile.fulfilled, (state, action) => {
-                console.log('Updating user state with:', action.payload); // Ajoutez ceci
+                console.log('Updating user state with:', action.payload);
                 state.user = action.payload; 
             })
 

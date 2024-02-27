@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitOrder, submitPayment } from '../../../features/orderSlice'; // Importez l'action submitPayment
+import { submitOrder, submitPayment } from '../../../features/orderSlice'; 
 import { useStripe, useElements, CardElement, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -27,9 +27,12 @@ const PaymentComponent = () => {
                 amount: totalWithShipping * 100, 
                 token: user.token,
             };
+            console.log(paymentData);
 
             const clientSecret = await dispatch(submitPayment(paymentData)).unwrap();
 
+          
+            
             const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: elements.getElement(CardElement),
