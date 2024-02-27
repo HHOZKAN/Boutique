@@ -3,53 +3,41 @@ import { useDispatch, useSelector } from 'react-redux';
 import { submitOrder, submitPayment } from '../../../features/orderSlice'; // Importez l'action submitPayment
 import { useStripe, useElements, CardElement, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = loadStripe('pk_test_51O0h9OBS3qnH4coLP5gmzElRLQeJsmGp8iRCUAxUVG8CqAOF4UyaxopphfhkuKGfKQ13AEXjwWRzEz42xEBONMUy00FPBXjDwv');
 
-const stripePromise = loadStripe('pk_test_51O0h9OBS3qnH4coLP5gmzElRLQeJsmGp8iRCUAxUVG8CqAOF4UyaxopphfhkuKGfKQ13AEXjwWRzEz42xEBONMUy00FPBXjDwv'); // Remplace 'ta_cle_publique_de_stripe' par ta clé publique de Stripe
 
-const PaymentComponent = () => {
+export const PaymentComposant = () => {
     const [paymentMethod, setPaymentMethod] = useState('');
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
+    const cart2 = useSelector((state) => state.cart.itemsList);
+    console.log('Cart:', cart2);
     const user = useSelector((state) => state.user);
     const stripe = useStripe();
-    const elements = useElements();
+    const [isOrderValidated, setIsOrderValidated] = useState(false);
 
-    const handlePayment = async () => {
-        const orderData = {
-            orderItems: cart.itemsList,
-            shippingAddress: cart.shippingAddress,
-            paymentMethod: paymentMethod
-        };
 
-        if (paymentMethod === 'Credit Card') {
-            
-            const paymentData = {
-                amount: totalWithShipping * 100, 
-                token: user.token,
-            };
 
-            const clientSecret = await dispatch(submitPayment(paymentData)).unwrap();
-
-            const result = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: elements.getElement(CardElement),
-                    billing_details: {
-                        name: 'John Doe',
-                    },
-                },
-            });
-
-            if (result.error) {
-                console.log('Erreur lors de la confirmation du paiement:', result.error.message);
-            } else {
-                if (result.paymentIntent.status === 'succeeded') {
-                    // Le paiement a réussi
-                    orderData.paymentMethodId = result.paymentIntent.id;
-                }
-            }
+    const makePayment = async () => {
+        const body = {
+            products: cart.itemsList,
         }
 
-        dispatch(submitOrder(orderData));
+        const headers = {
+            "Content-Type": "application/json",
+        }
+
+        const response = await fetch('http://localhost:5050/api/orders/pay', {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(body)
+        })
+
+        const session = await response.json();
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: session.id,
+        });
     };
 
     const totalPrice = cart.itemsList.reduce((total, item) => total + item.totalPrice, 0);
@@ -83,21 +71,14 @@ const PaymentComponent = () => {
                 <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
                     <p className="text-xl font-medium">Information paiement</p>
                     <div className="mt-4">
-                        <p className="text-sm font-medium text-gray-900">Choisissez votre méthode de paiement</p>
+                        <p className="text-sm font-medium text-gray-900">Méthode de paiement</p>
                         <div>
-                            <input type="radio" id="paypal" name="paymentMethod" value="Paypal" onChange={(e) => setPaymentMethod(e.target.value)} />
-                            <label htmlFor="paypal">Paypal</label><br />
-                            <input type="radio" id="creditCard" name="paymentMethod" value="Credit Card" onChange={(e) => setPaymentMethod(e.target.value)} />
+                            <input type="radio" id="creditCard" name="paymentMethod" value="Credit Card" checked onChange={(e) => setPaymentMethod(e.target.value)} />
                             <label htmlFor="creditCard">Carte Bancaire</label>
                         </div>
                     </div>
 
-                    {paymentMethod === 'Credit Card' && (
-                        <>
-                            <CardElement />
 
-                        </>
-                    )}
 
                     <div className="mt-6 border-t border-b py-2">
                         <div className="flex items-center justify-between">
@@ -113,8 +94,23 @@ const PaymentComponent = () => {
                         <p className="text-sm font-medium text-gray-900">Total</p>
                         <p className="text-2xl font-semibold text-gray-900">{totalWithShipping.toFixed(2)} €</p></div>
 
-                    <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white" onClick={handlePayment}>Payer</button>
-                </div>
+                    <button
+                        type="button"
+                        onClick={() => setIsOrderValidated(true)}
+                        className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Validez votre commande
+                    </button>
+
+                    {isOrderValidated && (
+                        <button
+                            type="button"
+                            onClick={makePayment}
+                            className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Payer
+                        </button>
+                    )}                </div>
             </div >
 
         </>
@@ -122,9 +118,9 @@ const PaymentComponent = () => {
 
 }
 
+
 export const Payment = () => (
     <Elements stripe={stripePromise}>
-        <PaymentComponent />
+        <PaymentComposant />
     </Elements>
 );
-

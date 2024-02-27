@@ -12,7 +12,7 @@ export const submitOrder = createAsyncThunk('orders/submitOrder', async (orderDa
                 Authorization: `Bearer ${orderData.token}`, 
             },
         };
-        const { data } = await api.post('/api/orders', orderData, config);
+        const { data } = await axios.post('http://localhost:5050/api/orders', orderData, config);
         return data;
     } catch (error) {
         return rejectWithValue(error.response.data);
@@ -27,7 +27,7 @@ export const submitPayment = createAsyncThunk('orders/submitPayment', async (pay
                 Authorization: `Bearer ${paymentData.token}`, 
             },
         };
-        const { data } = await api.post('/api/orders/pay', paymentData, config);
+        const { data } = await axios.post('http://localhost:5050/api/orders/pay', paymentData, config);
         return data.clientSecret;
     } catch (error) {
         return rejectWithValue(error.response.data);
