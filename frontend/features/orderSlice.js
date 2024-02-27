@@ -12,7 +12,11 @@ export const submitOrder = createAsyncThunk('orders/submitOrder', async (orderDa
                 Authorization: `Bearer ${orderData.token}`, 
             },
         };
-        const { data } = await axios.post('http://localhost:5050/api/orders', orderData, config);
+        const body = {
+            cart: orderData.cart, // Ajoutez les données du panier ici
+            // Ajoutez d'autres données de commande ici
+        };
+        const { data } = await axios.post('http://localhost:5050/api/orders', body, config);
         return data;
     } catch (error) {
         return rejectWithValue(error.response.data);

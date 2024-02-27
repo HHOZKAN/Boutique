@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitOrder, submitPayment } from '../../../features/orderSlice'; 
+import { submitOrder, submitPayment } from '../../../features/orderSlice';
 import { useStripe, useElements, CardElement, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe('pk_test_51O0h9OBS3qnH4coLP5gmzElRLQeJsmGp8iRCUAxUVG8CqAOF4UyaxopphfhkuKGfKQ13AEXjwWRzEz42xEBONMUy00FPBXjDwv');
@@ -14,7 +14,7 @@ export const PaymentComposant = () => {
     console.log('Cart:', cart2);
     const user = useSelector((state) => state.user);
     const stripe = useStripe();
-    const [isOrderValidated, setIsOrderValidated] = useState(false);
+    const [isOrderMade, setIsOrderMade] = useState(false);
 
 
 
@@ -22,22 +22,28 @@ export const PaymentComposant = () => {
         const body = {
             products: cart.itemsList,
         }
-
         const headers = {
             "Content-Type": "application/json",
         }
-
         const response = await fetch('http://localhost:5050/api/orders/pay', {
             method: "POST",
             headers: headers,
             body: JSON.stringify(body)
         })
-
         const session = await response.json();
-
         const result = await stripe.redirectToCheckout({
             sessionId: session.id,
         });
+    };
+
+    const makeOrder = async () => {
+        const orderData = {
+            token: user.token,
+            cart: cart, // Ajoutez les données du panier ici
+            // Ajoutez d'autres données de commande ici
+        };
+        await dispatch(submitOrder(orderData));
+        setIsOrderMade(true); // Mettez à jour isOrderMade lorsque makeOrder est appelé
     };
 
     const totalPrice = cart.itemsList.reduce((total, item) => total + item.totalPrice, 0);
@@ -94,15 +100,16 @@ export const PaymentComposant = () => {
                         <p className="text-sm font-medium text-gray-900">Total</p>
                         <p className="text-2xl font-semibold text-gray-900">{totalWithShipping.toFixed(2)} €</p></div>
 
+
                     <button
                         type="button"
-                        onClick={() => setIsOrderValidated(true)}
+                        onClick={makeOrder}
                         className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Validez votre commande
                     </button>
 
-                    {isOrderValidated && (
+                    {isOrderMade && (
                         <button
                             type="button"
                             onClick={makePayment}
@@ -110,7 +117,7 @@ export const PaymentComposant = () => {
                         >
                             Payer
                         </button>
-                    )}                </div>
+                    )}               </div>
             </div >
 
         </>

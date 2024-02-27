@@ -20,7 +20,7 @@ userRoute.post(
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
-                token: generateToken(user._id),
+                token: generateToken(user._id, user.email, user.name, user.isAdmin, { age: user.age }),
                 createAt: user.createAt,
             });
         } else {
