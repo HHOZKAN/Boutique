@@ -13,7 +13,6 @@ export const submitOrder = createAsyncThunk('orders/submitOrder', async (orderDa
             },
         };
         const { data } = await axios.post('http://localhost:5050/api/orders', orderData, config);
-        console.log(data);
         return data;
     } catch (error) {
         return rejectWithValue(error.response.data);

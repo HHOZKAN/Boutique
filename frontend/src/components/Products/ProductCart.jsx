@@ -8,7 +8,6 @@ export const ProductCart = ({ id, cover, name, price }) => {
   
   const dispatch = useDispatch()
   const addToCart = () => {
-    console.log({ id, name, price, cover }); 
     dispatch(cartActions.addToCart({ id, name, price, cover }));
   };
   return (

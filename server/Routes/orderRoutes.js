@@ -11,26 +11,32 @@ const orderRouter = express.Router();
 
 // ROUTE STRIPE
 orderRouter.post('/pay', asyncHandler(async (req, res) => {
-    const { amount, id } = req.body;
     try {
-        const payment = await stripe.paymentIntents.create({
-            amount,
-            currency: 'EUR',
-            description: 'Votre description',
-            payment_method: id,
-            confirm: true
+        const { products } = req.body;
+
+        const lineItems = products.map((product) => ({
+            price_data: {
+                currency: 'eur',
+                product_data: {
+                    name: product.name,
+                },
+                unit_amount: Math.round(product.price * 100),
+            },
+            quantity: product.quantity,
+        }));
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: `${process.env.CLIENT_URL}/success`,
+            cancel_url: `${process.env.CLIENT_URL}/cancel`,
         });
-        console.log('Payment', payment);
-        res.json({
-            message: 'Paiement réussi',
-            success: true
-        });
+
+        res.json({ id: session.id });
     } catch (error) {
-        console.log('Erreur', error);
-        res.json({
-            message: 'Paiement échoué',
-            success: false
-        });
+        console.error(error);
+        res.status(500).json({ message: 'An error occurred while creating the payment session' });
     }
 }));
 
@@ -74,3 +80,5 @@ orderRouter.post(
 );
 
 export default orderRouter;
+
+
