@@ -2,6 +2,7 @@ import express from 'express';
 import asyncHandler from 'express-async-handler';
 import protect from '../Middleware/AuthMiddleware.js';
 import Order from '../Models/OrderModel.js';
+import jwt from 'jsonwebtoken';
 
 import Stripe from 'stripe';
 
@@ -10,9 +11,10 @@ const stripe = new Stripe('sk_test_51O0h9OBS3qnH4coLGYIIpazYpEFeQXwRoXvugX9LFpCx
 const orderRouter = express.Router();
 
 // ROUTE STRIPE
-orderRouter.post('/pay', asyncHandler(async (req, res) => {
+orderRouter.post('/pay', protect, asyncHandler(async (req, res) => {
     try {
         const { products } = req.body;
+        const decodedToken = jwt.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET);
 
         const lineItems = products.map((product) => ({
             price_data: {
@@ -29,8 +31,9 @@ orderRouter.post('/pay', asyncHandler(async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${process.env.CLIENT_URL}/success`,
-            cancel_url: `${process.env.CLIENT_URL}/cancel`,
+            success_url: `${process.env.CLIENT_URL}/paymentsuccess`,
+            cancel_url: `${process.env.CLIENT_URL}/payementcancel`,
+            customer_email: decodedToken.email,
         });
 
         res.json({ id: session.id });
@@ -46,13 +49,13 @@ orderRouter.post(
     '/',
     protect,
     asyncHandler(async (req, res) => {
-        const { orderItems, 
-            shippingAddress, 
-            paymentMethod, 
-            itemsPrice, 
-            taxPrice, 
-            shippingPrice, 
-            totalPrice 
+        const { orderItems,
+            shippingAddress,
+            paymentMethod,
+            itemsPrice,
+            taxPrice,
+            shippingPrice,
+            totalPrice
         } = req.body;
 
         if (orderItems && orderItems.length === 0) {

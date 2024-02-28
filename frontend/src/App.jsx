@@ -10,6 +10,8 @@ import { Account } from "./pages/account/Account.jsx";
 import { restoreUser } from '/features/userSlice';
 import { Shipping } from "./pages/payment/Shipping.jsx";
 import { Payment } from "./pages/payment/Payment.jsx";
+import { Paymentsuccess } from "./pages/payment/Paymentsucess.jsx";
+import { Paymentcancel } from "./pages/payment/Paymentcancel.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +36,8 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/paymentsuccess" element={<Paymentsuccess />} />
+          <Route path="/paymentcancel" element={<Paymentcancel />} />
         </Routes>
         <Footer />
       </Router>

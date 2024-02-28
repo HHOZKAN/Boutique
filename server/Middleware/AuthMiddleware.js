@@ -25,6 +25,7 @@ const protect = expressAsyncHandler(
             }
         }
         if (!token) {
+            console.log('No token found'); // Log pour vérifier si le token est présent
             res.status(401);
             throw new Error("Not authorized, no token");
         }

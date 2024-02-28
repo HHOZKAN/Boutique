@@ -24,6 +24,7 @@ export const PaymentComposant = () => {
         }
         const headers = {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${user.token}`, // Ajout du token d'authentification
         }
         const response = await fetch('http://localhost:5050/api/orders/pay', {
             method: "POST",
@@ -31,6 +32,7 @@ export const PaymentComposant = () => {
             body: JSON.stringify(body)
         })
         const session = await response.json();
+        console.log('Session:', session);
         const result = await stripe.redirectToCheckout({
             sessionId: session.id,
         });
