@@ -10,6 +10,8 @@ import NewUser from './pages/newUser/NewUser';
 import ProductList from './pages/productList/ProductList';
 import Product from './pages/product/Product';
 import NewProduct from './pages/newProduct/NewProduct';
+import { Login } from './pages/login/Login';
+import { Register } from '../../frontend/src/pages/login/Register';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} exact />
+          <Route path="/login" element={ <Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/users" element={<UserList />} />
           <Route path="/user/:userId" element={<User />} />
           <Route path="/newUser" element={<NewUser />} />
