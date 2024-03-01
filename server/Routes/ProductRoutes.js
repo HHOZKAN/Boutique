@@ -21,4 +21,21 @@ productRoute.get('/:id', asyncsHandler(async (req, res) => {
     res.json(product);
 }));
 
+// POST a new product
+productRoute.post('/', asyncsHandler(async (req, res) => {
+    const product = new Product({
+        name: req.body.name,
+        image: req.body.image,
+        description: req.body.description,
+        reviews: req.body.reviews,
+        rating: req.body.rating,
+        numReviews: req.body.numReviews,
+        price: req.body.price,
+        countInStock: req.body.countInStock
+    });
+
+    const createdProduct = await product.save();
+    res.status(201).json(createdProduct);
+}));
+
 export default productRoute;
