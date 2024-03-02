@@ -24,7 +24,7 @@ export const PaymentComposant = () => {
         }
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${user.token}`, // Ajout du token d'authentification
+            "Authorization": `Bearer ${user.token}`, 
         }
         const response = await fetch('http://localhost:5050/api/orders/pay', {
             method: "POST",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./login.css";
+import "./sign.css";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../features/userSlice";
 import { Link } from "react-router-dom";
