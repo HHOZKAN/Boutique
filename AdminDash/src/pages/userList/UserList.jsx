@@ -1,74 +1,71 @@
 import "./userList.css";
-import { DataGrid } from "@material-ui/data-grid";
-import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { asyncActions } from '../../../features/userSlice';
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faTrash, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export default function UserList() {
-  const [data, setData] = useState(userRows);
+  const dispatch = useDispatch();
+  const allUsers = useSelector(state => state.user.allUsers);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    dispatch(asyncActions.getAllUsers());
+  }, [dispatch]);
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
-  
-  const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "user",
-      headerName: "User",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
-            {params.row.username}
-          </div>
-        );
-      },
-    },
-    { field: "email", headerName: "Email", width: 200 },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 120,
-    },
-    {
-      field: "transaction",
-      headerName: "Transaction Volume",
-      width: 160,
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={"/user/" + params.row.id}>
-              <button className="userListEdit">Edit</button>
-            </Link>
-            <FontAwesomeIcon
-              icon={faTrash}
-              className="userListDelete"
-              onClick={() => handleDelete(params.row.id)}
-            />
-          </>
-        );
-      },
-    },
-  ];
+    dispatch(asyncActions.deleteUser(id));
+  }
+
+  const filteredUsers = allUsers.filter(user =>
+    user._id.includes(searchTerm) ||
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="userList">
-      <DataGrid
-        rows={data}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        checkboxSelection
+    <div className="search-container">
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Rechercher..."
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
+      <FontAwesomeIcon icon={faSearch} className="search-icon" />
+    </div>
+    <button onClick={() => dispatch(asyncActions.createUser())}>
+      <FontAwesomeIcon icon={faPlus} /> Créer un nouvel utilisateur
+    </button>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredUsers && filteredUsers.map((user) => (
+            <tr key={user._id}>
+              <td>{user._id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>
+                <Link to={`/user/${user._id}`}>
+                  <FontAwesomeIcon icon={faEye} />
+                </Link>
+                <button onClick={() => handleDelete(user.id)}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

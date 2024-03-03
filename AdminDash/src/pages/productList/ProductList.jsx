@@ -1,52 +1,52 @@
-import "./productList.css";
-import { DataGrid } from "@material-ui/data-grid";
-import { productRows } from "../../dummyData";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { fetchData, deleteProduct } from '../../../features/dataSlice';
+import "./productList.css";
 
 export default function ProductList() {
-    const [data, setData] = useState(productRows);
+    const dispatch = useDispatch();
+    const { products, loading, error } = useSelector(state => state.data);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        dispatch(fetchData());
+    }, [dispatch]);
 
     const handleDelete = (id) => {
-        setData(data.filter((item) => item.id !== id));
+        dispatch(deleteProduct(id));
     };
 
-    const columns = [
-        { field: "id", headerName: "ID", width: 90 },
-        {
-            field: "product",
-            headerName: "Product",
-            width: 200,
-            renderCell: (params) => {
-                return (
-                    <div className="productListItem">
-                        <img className="productListImg" src={params.row.img} alt="" />
-                        {params.row.name}
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
+
+    return (
+        <div className="productList">
+            <div className="productListHeader">
+                <input 
+                    type="text" 
+                    placeholder="Search..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                />
+                <Link to="/newproduct">
+                    <button className="productListCreate">
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                </Link>
+            </div>
+            {products.filter(product => product.name.toLowerCase().includes(searchTerm.toLowerCase())).map((product) => (
+                <div key={product._id} className="productListItem">
+                    <img className="productListImg" src={product.image} alt="" />
+                    <div className="productListDetails">
+                        <span>{product.name}</span>
+                        <span>Stock: {product.countInStock}</span>
+                        <span>Price: {product.price}</span>
                     </div>
-                );
-            },
-        },
-        { field: "stock", headerName: "Stock", width: 200 },
-        {
-            field: "status",
-            headerName: "Status",
-            width: 120,
-        },
-        {
-            field: "price",
-            headerName: "Price",
-            width: 160,
-        },
-        {
-            field: "action",
-            headerName: "Action",
-            width: 150,
-            renderCell: (params) => {
-                return (
-                    <>
-                        <Link to={"/product/" + params.row.id}>
+                    <div className="productListActions">
+                        <Link to={"/product/" + product._id}>
                             <button className="productListEdit">
                                 <FontAwesomeIcon icon={faEdit} />
                             </button>
@@ -54,23 +54,11 @@ export default function ProductList() {
                         <FontAwesomeIcon
                             icon={faTrash}
                             className="productListDelete"
-                            onClick={() => handleDelete(params.row.id)}
+                            onClick={() => handleDelete(product._id)}
                         />
-                    </>
-                );
-            },
-        },
-    ];
-
-    return (
-        <div className="productList">
-            <DataGrid
-                rows={data}
-                disableSelectionOnClick
-                columns={columns}
-                pageSize={8}
-                checkboxSelection
-            />
+                    </div>
+                </div>
+            ))}
         </div>
     );
 }

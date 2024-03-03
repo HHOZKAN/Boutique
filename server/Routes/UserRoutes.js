@@ -89,14 +89,27 @@ userRoute.get(
     })
 );
 
+userRoute.get(
+    '/',
+    asyncHandler(async (req, res) => {
+        const users = await User.find({});
+        if (users) {
+            res.json(users);
+        } else {
+            res.status(404);
+            throw new Error('No users found');
+        }
+    })
+);
+
 
 //! UPDATE PROFIL
 
 userRoute.put(
-    '/profile',
+    '/profile/:id',
     protect,
     asyncHandler(async (req, res) => {
-        const user = await User.findById(req.user._id)
+        const user = await User.findById(req.params.id)
 
         if (user) {
             user.name = req.body.name || user.name;
@@ -119,6 +132,25 @@ userRoute.put(
         } else {
             res.status(404);
             throw new Error('User not found');
+        }
+    })
+);
+
+// GET the last 5 registered users
+userRoute.get(
+    '/lastRegistered',
+    asyncHandler(async (req, res) => {
+        try {
+            const users = await User.find().sort({ createAt: -1 }).limit(5);
+            if (users) {
+                res.json(users);
+            } else {
+                res.status(404);
+                throw new Error('No users found');
+            }
+        } catch (error) {
+            console.error("Error occurred while getting last registered users:", error);
+            res.status(500).json({ message: error.message });
         }
     })
 );

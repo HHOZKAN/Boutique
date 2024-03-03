@@ -1,17 +1,27 @@
 import React from "react";
-import "./topbar.css";
+import "./topbar.css"
+import { User } from "./User";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-export default function Topbar() {
+export const Topbar = () => {
+
   return (
-    <div className="topbar">
-      <div className="topbarWrapper">
-        <div className="topLeft">
-          <span className="logo">Admin Boutique</span>
+    <>
+      <header className="header">
+        <div className="scontainer flex">
+          <div className='logo'>
+            <Link to="">
+              <div onClick={() => window.scrollTo(0, 0)} /> 
+            ADMIN BOUTIQUE
+            </Link>
+          </div>
+          <div className="account flexCenter">
+            <User />
+          </div>
         </div>
-        <div className="topRight">
-          <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
-        </div>
-      </div>
-    </div>
-  );
+      </header>
+    </>
+  )
 }

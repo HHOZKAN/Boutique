@@ -43,6 +43,38 @@ orderRouter.post('/pay', protect, asyncHandler(async (req, res) => {
     }
 }));
 
+// GET payment details
+orderRouter.get(
+    '/payment/:sessionId',
+    protect,
+    asyncHandler(async (req, res) => {
+        try {
+            const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+            res.json(session);
+        } catch (error) {
+            console.error("Error occurred while getting payment details:", error);
+            res.status(500).json({ message: error.message });
+        }
+    })
+);
+
+// GET all payments
+orderRouter.get(
+    '/payments',
+    protect,
+    asyncHandler(async (req, res) => {
+        try {
+            const payments = await stripe.checkout.sessions.list();
+            res.json(payments);
+        } catch (error) {
+            console.error("Error occurred while getting payments:", error);
+            res.status(500).json({ message: error.message });
+        }
+    })
+);
+
+
+
 //! LOGIN
 
 orderRouter.post(

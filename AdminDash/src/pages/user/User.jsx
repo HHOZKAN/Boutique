@@ -1,9 +1,43 @@
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faMapMarkerAlt, faEnvelope, faUser, faMobileAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncActions } from '../../../features/userSlice';
 import "./user.css";
 
 export default function User() {
+    const { userId } = useParams();
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user.allUsers.find(user => user._id === userId));
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        isAdmin: false,
+    });
+
+    useEffect(() => {
+        if (user) {
+            setFormData({
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+            });
+        }
+    }, [user]);
+
+    const handleChange = (e) => {
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        setFormData({
+            ...formData,
+            [e.target.name]: value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(asyncActions.updateUserProfile({ id: userId, ...formData }));
+    };
+
     return (
         <div className="user">
             <div className="userTitleContainer">
@@ -13,60 +47,16 @@ export default function User() {
                 </Link>
             </div>
             <div className="userContainer">
-                <div className="userShow">
-                    <div className="userShowTop">
-                        <img
-                            src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                            alt=""
-                            className="userShowImg"
-                        />
-                        <div className="userShowTopTitle">
-                            <span className="userShowUsername">Anna Becker</span>
-                            <span className="userShowUserTitle">Software Engineer</span>
-                        </div>
-                    </div>
-                    <div className="userShowBottom">
-                        <span className="userShowTitle">Account Details</span>
-                        <div className="userShowInfo">
-                            <FontAwesomeIcon icon={faUser} className="userShowIcon" />
-                            <span className="userShowInfoTitle">annabeck99</span>
-                        </div>
-                        <div className="userShowInfo">
-                            <FontAwesomeIcon icon={faCalendar} className="userShowIcon" />
-                            <span className="userShowInfoTitle">10.12.1999</span>
-                        </div>
-                        <span className="userShowTitle">Contact Details</span>
-                        <div className="userShowInfo">
-                            <FontAwesomeIcon icon={faMobileAlt} className="userShowIcon" />
-                            <span className="userShowInfoTitle">+1 123 456 67</span>
-                        </div>
-                        <div className="userShowInfo">
-                            <FontAwesomeIcon icon={faEnvelope} className="userShowIcon" />
-                            <span className="userShowInfoTitle">annabeck99@gmail.com</span>
-                        </div>
-                        <div className="userShowInfo">
-                            <FontAwesomeIcon icon={faMapMarkerAlt} className="userShowIcon" />
-                            <span className="userShowInfoTitle">New York | USA</span>
-                        </div>
-                    </div>
-                </div>
                 <div className="userUpdate">
-                    <span className="userUpdateTitle">Edit</span>
-                    <form className="userUpdateForm">
+                    <form className="userUpdateForm" onSubmit={handleSubmit}>
                         <div className="userUpdateLeft">
                             <div className="userUpdateItem">
                                 <label>Username</label>
                                 <input
                                     type="text"
-                                    placeholder="annabeck99"
-                                    className="userUpdateInput"
-                                />
-                            </div>
-                            <div className="userUpdateItem">
-                                <label>Full Name</label>
-                                <input
-                                    type="text"
-                                    placeholder="Anna Becker"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     className="userUpdateInput"
                                 />
                             </div>
@@ -74,39 +64,24 @@ export default function User() {
                                 <label>Email</label>
                                 <input
                                     type="text"
-                                    placeholder="annabeck99@gmail.com"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="userUpdateInput"
                                 />
                             </div>
                             <div className="userUpdateItem">
-                                <label>Phone</label>
+                                <label>Admin</label>
                                 <input
-                                    type="text"
-                                    placeholder="+1 123 456 67"
-                                    className="userUpdateInput"
-                                />
-                            </div>
-                            <div className="userUpdateItem">
-                                <label>Address</label>
-                                <input
-                                    type="text"
-                                    placeholder="New York | USA"
+                                    type="checkbox"
+                                    name="isAdmin"
+                                    checked={formData.isAdmin}
+                                    onChange={handleChange}
                                     className="userUpdateInput"
                                 />
                             </div>
                         </div>
                         <div className="userUpdateRight">
-                            <div className="userUpdateUpload">
-                                <img
-                                    className="userUpdateImg"
-                                    src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                                    alt=""
-                                />
-                                <label htmlFor="file">
-                                    <FontAwesomeIcon icon={faUpload} className="userUpdateIcon" />
-                                </label>
-                                <input type="file" id="file" style={{ display: "none" }} />
-                            </div>
                             <button className="userUpdateButton">Update</button>
                         </div>
                     </form>

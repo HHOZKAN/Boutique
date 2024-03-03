@@ -2,30 +2,59 @@
     flex: 4;
   }
   
-  .userListUser {
-    display: flex;
-    align-items: center;
-  }
-  
-  .userListImg {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .userListEdit{
-      border: none;
-      border-radius: 10px;
-      padding: 5px 10px;
-      background-color: #3bb077;
-      color: white;
-      cursor: pointer;
-      margin-right: 20px;
-  }
-  
-  .userListDelete{
-      color: red;
-      cursor: pointer;
-  }
+.userList {
+  width: 100%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.userList button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.userList button:hover {
+  background-color: #939fac;
+}
+
+.userList table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.userList th, .userList td {
+  border: 1px solid #ddd;
+}
+
+.userList th {
+  background-color: #f2f2f2;
+}
+
+.userList tr:hover {background-color: #f5f5f5;}
+
+.search-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}

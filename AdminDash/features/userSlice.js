@@ -33,14 +33,35 @@ export const getUserProfile = createAsyncThunk('user/profile', async (_, { rejec
     }
 });
 
-export const updateUserProfile = createAsyncThunk('user/updateProfile', async (updatedUserData, { rejectWithValue, getState }) => {
-    const { user } = getState();
+export const getAllUsers = createAsyncThunk('user/getAll', async (_, { rejectWithValue }) => {
     try {
-        const { data } = await axios.put('http://localhost:5050/api/users/profile', updatedUserData, {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            },
-        });
+        const { data } = await axios.get('http://localhost:5050/api/users');
+        return data;
+    } catch (err) {
+        return rejectWithValue(err.response.data);
+    }
+});
+
+export const updateUserProfile = createAsyncThunk(
+    'user/updateProfile',
+    async (userUpdates, { rejectWithValue, getState }) => {
+        const { user } = getState();
+        try {
+            const { data } = await axios.put(`http://localhost:5050/api/users/profile/${userUpdates.id}`, userUpdates, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getLastRegisteredUsers = createAsyncThunk('user/getLastRegistered', async (_, { rejectWithValue }) => {
+    try {
+        const { data } = await axios.get('http://localhost:5050/api/users/lastRegistered');
         return data;
     } catch (err) {
         return rejectWithValue(err.response.data);
@@ -53,7 +74,8 @@ const userSlice = createSlice({
         isAuthenticated: false,
         token: null,
         user: null,
-
+        allUsers: [],
+        lastRegisteredUsers: [],
     },
     reducers: {
         logoutUser: (state) => {
@@ -79,20 +101,28 @@ const userSlice = createSlice({
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.isAuthenticated = true;
                 state.token = action.payload.token;
+                // STOCKE LE TOKEN DANS LE LOCAL STORAGE
+                localStorage.setItem('token', action.payload.token);
             })
             .addCase(getUserProfile.fulfilled, (state, action) => {
-                console.log('Updating user state with:', action.payload);
-                state.user = action.payload; 
+                state.user = action.payload;
             })
 
             .addCase(updateUserProfile.fulfilled, (state, action) => {
                 state.isAuthenticated = true;
                 state.user = { ...state.user, ...action.payload };
             })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+                state.allUsers = action.payload;
+            })
+            .addCase(getLastRegisteredUsers.fulfilled, (state, action) => {
+                state.lastRegisteredUsers = action.payload;
+            })
     },
 
 });
 
 export const { logoutUser, restoreUser } = userSlice.actions;
+export const asyncActions = { loginUser, registerUser, getUserProfile, getAllUsers, updateUserProfile, getLastRegisteredUsers };
 
 export default userSlice.reducer;

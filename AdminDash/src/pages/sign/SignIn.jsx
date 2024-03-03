@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import "./sign.css";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../features/userSlice";
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 
 export const SignIn = () => {
     const dispatch = useDispatch();
@@ -13,20 +12,28 @@ export const SignIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser({ email, password }));
-        navigate('/'); 
+        navigate('/');
     };
 
     return (
         <>
             <section className='login'>
                 <div className='container'>
-                    <form onSubmit={handleSubmit}>
-                        <span>Username or Email address</span>
-                        <input className="allinput" type='text' required value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <span>Password * </span>
-                        <input className="allinput" type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <button className='button allbtn'>Log in </button>
+                    <div className='backImg'>
+                        <div className='text'>
+                            <h3>Login</h3>
+                            <h1>ADMIN ETHEREE</h1>
+                        </div>
+                    </div>
 
+                    <form onSubmit={handleSubmit}>
+                        <div><span>Username or Email address</span> </div>
+                        <input className="allinput" type='text' required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <div> <span>Password * </span> </div>
+                        <input className="allinput" type='password' required value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <div>
+                            <button className='button allbtn'>Log in </button>
+                        </div>
                         <Link to='/register'> Sing Up </Link>
                     </form>
                 </div>
@@ -34,3 +41,4 @@ export const SignIn = () => {
         </>
     );
 };
+
