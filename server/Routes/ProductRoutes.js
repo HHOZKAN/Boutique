@@ -38,7 +38,8 @@ productRoute.post('/', asyncsHandler(async (req, res) => {
             image: req.body.image,
             description: req.body.description,
             price: req.body.price,
-            countInStock: req.body.countInStock
+            countInStock: req.body.countInStock,
+            category : req.body.category
         });
 
         const createdProduct = await product.save();

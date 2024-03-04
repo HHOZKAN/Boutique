@@ -10,7 +10,8 @@ export default function NewProduct() {
     image: '',
     description: '',
     price: '',
-    countInStock: ''
+    countInStock: '',
+    category: '' 
   });
 
   const handleChange = (e) => {
@@ -24,10 +25,10 @@ export default function NewProduct() {
 
   return (
     <div className="newProduct">
-      <h1 className="addProductTitle">New Product</h1>
+      <h1 className="addProductTitle">Nouveau Produit</h1>
       <form className="addProductForm" onSubmit={handleSubmit}>
         <div className="addProductItem">
-          <label>Name</label>
+          <label>Nom</label>
           <input type="text" name="name" value={productData.name} onChange={handleChange} />
         </div>
         <div className="addProductItem">
@@ -39,12 +40,24 @@ export default function NewProduct() {
           <input type="text" name="description" value={productData.description} onChange={handleChange} />
         </div> 
         <div className="addProductItem">
-          <label>Price</label>
+          <label>Prix</label>
           <input type="text" name="price" value={productData.price} onChange={handleChange} />
         </div>
         <div className="addProductItem">
           <label>Stock</label>
           <input type="text" name="countInStock" value={productData.countInStock} onChange={handleChange} />
+        </div>
+        <div className="addProductItem">
+          <label>Catégorie</label>
+          <select name="category" value={productData.category} onChange={handleChange}>
+            <option value="">Choississez une catégorie</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Non-fiction">Non-fiction</option>
+            <option value="Science">Science</option>
+            <option value="Biography">Biographie</option>
+            <option value="History">Histoire</option>
+            <option value="Fantasy">Fantasy</option>
+          </select>
         </div>
         <button className="addProductButton">Create</button>
       </form>

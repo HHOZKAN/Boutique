@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CartItems } from "./CartItems";
 import { fetchData } from '../../../features/dataSlice';
 import { cartActions } from "../../../features/cartSlice"
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 
 export const Card = () => {
@@ -43,7 +43,7 @@ export const Card = () => {
             </div>
             <div className={cardOpen ? "overlay" : "nonoverlay"}></div>
 
-            <div className={cardOpen ? "cartItem" : "cardhide"}>
+            <div className={cardOpen ? "cartItem" : "cardhide"} style={{ overflowY: 'auto' }}>
                 <div className='title flex'>
                     <h2>Votre Panier</h2>
                     <button onClick={closeCard} className="allbtn">
@@ -63,8 +63,7 @@ export const Card = () => {
                 <button onClick={() => dispatch(cartActions.resetCart())} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                     Vider le panier
                 </button>
-
-                <div className='checkOut'>
+                <div className="checkOut">
                     <button onClick={handleCheckout} className="allbtn">
                         <span>Procéder au paiement</span>
                         <label htmlFor=''>${total}</label>

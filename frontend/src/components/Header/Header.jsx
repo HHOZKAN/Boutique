@@ -17,7 +17,7 @@ export const Header = () => {
             <header className="header">
                 <div className="scontainer flex">
                     <div className='logo'>
-                        <Link to=""><img src={Svg} alt="Logo" onClick={() => window.scrollTo(0, 0)}  /></Link>
+                        <Link to=""><div onClick={() => window.scrollTo(0, 0)}  /> ETHEREE </Link>
                     </div>
                     <div className="search flex">
                         <AiOutlineSearch className='searchIcon' />
