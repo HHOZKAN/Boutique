@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { cartActions } from '../../../features/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Shipping = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [adress, setAdress] = useState('');
+  const [address, setAdress] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('');
 
   const handleContinue = () => {
-    dispatch(cartActions.saveShippingAddress({ adress, city, postalCode, country }));
+    if (address && city && postalCode && country) {
+      dispatch(cartActions.saveShippingAddress({ address, city, postalCode, country }));
+      navigate('/payment'); 
+    } else {
+      alert('Veuillez remplir tous les champs');
+    }
   };
+  
   return (
     <div className="">
       <div className="w-full max-w-3xl mx-auto p-8">
@@ -26,7 +34,7 @@ export const Shipping = () => {
             <div className="mt-4">
               <label htmlFor="address" className="block text-gray-700 dark:text-white mb-1">Adresse</label>
               <input type="text" id="address" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-                value={adress}
+                value={address}
                 required
                 onChange={(e) => setAdress(e.target.value)} />
             </div>
@@ -58,7 +66,7 @@ export const Shipping = () => {
             </div>
           </div>
           <div className="mt-8 flex justify-end">
-            <button className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-700 dark:bg-teal-600 dark:text-white dark:hover:bg-teal-900" onClick={handleContinue}>CONTINUER</button>          </div>
+            <button className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-700 dark:bg-teal-600 dark:text-white dark:hover:bg-teal-900" onClick={handleContinue}>CONTINUER VERS LE PAIEMENT</button>          </div>
         </div>
       </div>
     </div>

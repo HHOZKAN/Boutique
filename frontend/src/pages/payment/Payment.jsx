@@ -11,7 +11,6 @@ export const PaymentComposant = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const cart2 = useSelector((state) => state.cart.itemsList);
-    console.log('Cart:', cart2);
     const user = useSelector((state) => state.user);
     const stripe = useStripe();
     const [isOrderMade, setIsOrderMade] = useState(false);
@@ -24,7 +23,7 @@ export const PaymentComposant = () => {
         }
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${user.token}`, 
+            "Authorization": `Bearer ${user.token}`,
         }
         const response = await fetch('http://localhost:5050/api/orders/pay', {
             method: "POST",
@@ -41,11 +40,17 @@ export const PaymentComposant = () => {
     const makeOrder = async () => {
         const orderData = {
             token: user.token,
-            cart: cart, // Ajoutez les données du panier ici
-            // Ajoutez d'autres données de commande ici
+            cart: cart.itemsList.map(item => ({
+                name: item.name,
+                qty: item.quantity,
+                price: item.price,
+                product: item.id,
+            })),
+            shippingAddress: cart.shippingAddress,
+            totalPrice: totalPrice,
         };
         await dispatch(submitOrder(orderData));
-        setIsOrderMade(true); // Mettez à jour isOrderMade lorsque makeOrder est appelé
+        setIsOrderMade(true);
     };
 
     const totalPrice = cart.itemsList.reduce((total, item) => total + item.totalPrice, 0);

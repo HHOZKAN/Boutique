@@ -16,10 +16,6 @@ const orderSchema = mongoose.Schema({
                 type: Number,
                 required: true
             },
-            image: {
-                type: String,
-                required: true
-            },
             price: {
                 type: Number,
                 required: true
@@ -49,34 +45,11 @@ const orderSchema = mongoose.Schema({
             required: true
         },
     },
-    paymentMethod: {
-        type: String,
-        required: true,
-        default: 'PayPal',
-    },
-    paymentResult: {
-        id: { type: String },
-        status: { type: String },
-        update_time: { type: String },
-        email_address: { type: String },
-    },
+  
     totalPrice: {
         type: Number,
         required: true,
         default: 0.0
-    },
-    isPaid: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    isDelivered: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    deliveredAt: {
-        type: Date,
     },
 },
 

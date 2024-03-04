@@ -5,6 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CartItems } from "./CartItems";
 import { fetchData } from '../../../features/dataSlice';
 import { cartActions } from "../../../features/cartSlice"
+import { useNavigate } from 'react-router-dom'; 
 
 
 export const Card = () => {
@@ -27,6 +28,12 @@ export const Card = () => {
 
     const cartItems = useSelector((state) => state.cart.itemsList);
     const quantity = useSelector((state) => state.cart.totalQuantity);
+
+    const navigate = useNavigate();
+
+    const handleCheckout = () => {
+        navigate('/shipping');
+    }
 
     return (
         <>
@@ -58,10 +65,9 @@ export const Card = () => {
                 </button>
 
                 <div className='checkOut'>
-                    <button className="allbtn">
+                    <button onClick={handleCheckout} className="allbtn">
                         <span>Procéder au paiement</span>
                         <label htmlFor=''>${total}</label>
-
                     </button>
                 </div>
             </div>

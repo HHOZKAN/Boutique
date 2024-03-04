@@ -13,8 +13,9 @@ export const submitOrder = createAsyncThunk('orders/submitOrder', async (orderDa
             },
         };
         const body = {
-            cart: orderData.cart, // Ajoutez les données du panier ici
-            // Ajoutez d'autres données de commande ici
+            orderItems: orderData.cart, // Assurez-vous que ceci est un tableau d'objets avec les champs name, qty, price, et product
+            shippingAddress: orderData.shippingAddress, // Assurez-vous que ceci est un objet avec les champs address, city, postalCode, et country
+            totalPrice: orderData.totalPrice, // Assurez-vous que ceci est un nombre
         };
         const { data } = await axios.post('http://localhost:5050/api/orders', body, config);
         return data;

@@ -81,14 +81,9 @@ orderRouter.post(
     '/',
     protect,
     asyncHandler(async (req, res) => {
-        const { orderItems,
-            shippingAddress,
-            paymentMethod,
-            itemsPrice,
-            taxPrice,
-            shippingPrice,
-            totalPrice
-        } = req.body;
+        console.log(req.body); // Log incoming data
+
+        const { orderItems, shippingAddress, totalPrice } = req.body;
 
         if (orderItems && orderItems.length === 0) {
             res.status(400);
@@ -96,21 +91,23 @@ orderRouter.post(
             return;
         } else {
             const order = new Order({
-                orderItems,
                 user: req.user._id,
+                orderItems,
                 shippingAddress,
-                paymentMethod,
-                itemsPrice,
-                taxPrice,
-                shippingPrice,
                 totalPrice,
             });
 
-            const createdOrder = await order.save();
+            console.log(order); // Log the created order object
 
-            res.status(201).json(createdOrder);
+            try {
+                const createdOrder = await order.save();
+                console.log(createdOrder); // Log the saved order
+                res.status(201).json(createdOrder);
+            } catch (error) {
+                console.error(error); // Log the error
+                res.status(500).json({ message: 'Error creating order: ' + error.message });
+            }
         }
-
     })
 );
 
